@@ -12,6 +12,8 @@ int Duracion; // entre 10 – 100
 void cargarListaDeTareas(tarea** tareasPorHacer, int cantidadDeTareas);
 void preguntarYCargarTareasRealizadas(tarea** tareasPorHacer, tarea** tareasRealizadas, int cantidadDeTareas);
 void mostrarTareasRealizadasYPendientes(tarea** tareasPorHacer, tarea** tareasRealizadas, int cantidadDeTareas);
+void buscarTarea(tarea** tareasPorHacer, tarea** tareasRealizadas, int cantidadDeTareas);
+
 
 int main(){
     srand(time(NULL));
@@ -26,6 +28,7 @@ int main(){
     cargarListaDeTareas(tareasPorHacer, cantidadDeTareas);
     preguntarYCargarTareasRealizadas(tareasPorHacer, tareasRealizadas, cantidadDeTareas);
     mostrarTareasRealizadasYPendientes(tareasPorHacer, tareasRealizadas, cantidadDeTareas);
+    buscarTarea(tareasPorHacer, tareasRealizadas, cantidadDeTareas);
 
     return 0;
 }
@@ -92,4 +95,32 @@ void mostrarTareasRealizadasYPendientes(tarea** tareasPorHacer, tarea** tareasRe
             printf("Duraci%cn: %d\n\n", 162,tareasPorHacer[i]->Duracion);
         }
     }
+}
+
+void buscarTarea(tarea** tareasPorHacer, tarea** tareasRealizadas, int cantidadDeTareas){
+    char* palabra = (char *)malloc(10*sizeof(char));
+
+    printf("\n_____________________________\n");
+    printf("Ingrese la palabra clave: ");
+    gets(palabra);
+    char* palabra2 = (char *)malloc((strlen(palabra)+1)*sizeof(char));
+    strcpy(palabra2,palabra);
+
+    printf("TAREA POR PALABRA CLAVE\n");
+
+    for(int i = 0 ; i < cantidadDeTareas ; i++){
+        if(tareasPorHacer[i] != NULL && strcmp(tareasPorHacer[i]->Descripcion,palabra2) == 0){
+            printf("\nTarea %d ", tareasPorHacer[i]->TareaID);
+            printf("\nDescripci%cn: %s\n", 162,tareasPorHacer[i]->Descripcion);
+            printf("Duraci%cn: %d", 162,tareasPorHacer[i]->Duracion);
+        }
+        if(tareasRealizadas[i] != NULL && strcmp(tareasRealizadas[i]->Descripcion,palabra2) == 0){
+            printf("\nTarea %d ", tareasRealizadas[i]->TareaID);
+            printf("\nDescripci%cn: %s\n", 162,tareasRealizadas[i]->Descripcion);
+            printf("Duraci%cn: %d", 162,tareasRealizadas[i]->Duracion);
+        }
+    }
+
+    free(palabra);
+    free(palabra2);
 }
